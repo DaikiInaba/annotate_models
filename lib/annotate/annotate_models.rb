@@ -235,6 +235,7 @@ module AnnotateModels
         attrs << 'unsigned' if col.respond_to?(:unsigned?) && col.unsigned?
         attrs << 'not null' unless col.null
         attrs << 'primary key' if klass.primary_key && (klass.primary_key.is_a?(Array) ? klass.primary_key.collect(&:to_sym).include?(col.name.to_sym) : col.name.to_sym == klass.primary_key.to_sym)
+        attrs << "comment(#{col.comment})" if col.comment
 
         if col_type == 'decimal'
           col_type << "(#{col.precision}, #{col.scale})"
